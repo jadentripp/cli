@@ -1,0 +1,46 @@
+This document is a set of instructions about how to use the GPT-4o-mini model to generate text.
+
+let's start with a simple {text} input to the model for our first request. We'll use both `system` and `user` messages for our first request, and we'll receive a response from the `assistant` role.
+
+from openai import OpenAI 
+import os
+
+## Set the API key and model name
+MODEL="gpt-4o-mini"
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "<your OpenAI API key if not set as an env var>"))
+completion = client.chat.completions.create(
+  model=MODEL,
+  messages=[
+    {"role": "system", "content": "You are a helpful assistant. Help me with my math homework!"}, # <-- This is the system message that provides context to the model
+    {"role": "user", "content": "Hello! Could you solve 2+2?"}  # <-- This is the user message for which the model will generate a response
+  ]
+)
+
+print("Assistant: " + completion.choices[0].message.content)
+
+Assistant: Of course! \( 2 + 2 = 4 \).
+
+---
+API
+The easiest way to get a transcript for a given video is to execute:
+
+from youtube_transcript_api import YouTubeTranscriptApi
+
+YouTubeTranscriptApi.get_transcript(video_id)
+Note: By default, this will try to access the English transcript of the video. If your video has a different language, or you are interested in fetching a different language's transcript, please read the section below.
+
+This will return a list of dictionaries looking somewhat like this:
+
+[
+    {
+        'text': 'Hey there',
+        'start': 7.58,
+        'duration': 6.13
+    },
+    {
+        'text': 'how are you',
+        'start': 14.08,
+        'duration': 7.58
+    },
+    # ...
+]
