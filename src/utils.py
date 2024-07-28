@@ -67,10 +67,10 @@ async def get_chat_completion(messages, model='gpt-4o-mini'):
         logger.error(f"Error calling OpenAI API: {str(e)}")
         raise
 
-def generate_folder_name(summary: str) -> str:
+async def generate_folder_name(summary: str) -> str:
     logger.info("Generating folder name")
     start_time = time.time()
-    content = get_chat_completion([
+    content = await get_chat_completion([
         {"role": "system", "content": "Generate a concise, descriptive folder name based on the given summary. Use underscores instead of spaces and keep it under 50 characters."},
         {"role": "user", "content": f"Summary:\n\n{summary}"}
     ], model=MODEL)

@@ -9,6 +9,7 @@ from rich.table import Table
 from rich.text import Text
 from src.youtube_summarizer import process_video
 from src.prompt_composer import PromptComposer
+from src.utils import get_video_id
 import logging
 
 # Load environment variables from .env file
@@ -52,13 +53,21 @@ async def run_cli_app():
         
         console.print(table)
 
-        choice = Prompt.ask("\nChoose an option", choices=["1", "2", "q"], default="1")
+        choice = Prompt.ask("\nChoose an option or enter a YouTube URL", default="1")
 
         if choice.lower() == 'q':
             console.print("[warning]Thank you for using the application. Goodbye![/warning]")
             break
 
-        if choice == "1":
+        if get_video_id(choice):
+            # If the input is a valid YouTube URL, process it
+            try:
+                with console.status("[bold green]Processing video...[/bold green]") as status:
+                    await process_video(choice)
+            except Exception as e:
+                logger.exception(f"An error occurred while processing the video: {str(e)}")
+                console.print(f"[error]An error occurred while processing the video: {str(e)}[/error]")
+        elif choice == "1":
             url = Prompt.ask("\nPlease enter a YouTube video URL")
             try:
                 with console.status("[bold green]Processing video...[/bold green]") as status:
@@ -68,6 +77,8 @@ async def run_cli_app():
                 console.print(f"[error]An error occurred while processing the video: {str(e)}[/error]")
         elif choice == "2":
             await composer.run()
+        else:
+            console.print("[error]Invalid option. Please try again.[/error]")
 
         console.print("\n" + "─" * 50 + "\n")
 
