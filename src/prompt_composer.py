@@ -42,11 +42,20 @@ class PromptComposer:
             return None
 
     def save_output(self, prompt_type, question, output):
+        # Create output directory if it doesn't exist
+        output_dir = os.path.join('output', prompt_type)
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Create a filename based on the input prompt
+        safe_filename = "".join([c if c.isalnum() or c in [' ', '-', '_'] else '_' for c in question]).rstrip()
+        safe_filename = safe_filename[:50]  # Limit filename length
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{prompt_type}_{timestamp}.txt"
-        with open(filename, "w") as f:
-            f.write(f"Question: {question}\n\nOutput:\n{output}")
-        return filename
+        filename = f"{safe_filename}_{timestamp}.txt"
+        
+        file_path = os.path.join(output_dir, filename)
+        with open(file_path, "w", encoding='utf-8') as f:
+            f.write(f"Prompt: {question}\n\nOutput:\n{output}")
+        return file_path
 
     async def run(self):
         while True:
@@ -56,7 +65,7 @@ class PromptComposer:
             self.console.print("1. Midjourney")
             self.console.print("2. Udio")
 
-            prompt_type = await Prompt.ask("Choice (1/2/q)", choices=["1", "2", "q"], default="1")
+            prompt_type = Prompt.ask("Choice (1/2/q)", choices=["1", "2", "q"], default="1")
             
             if prompt_type == 'q':
                 self.console.print('[warning]Exiting... Goodbye![/warning]')
@@ -67,7 +76,7 @@ class PromptComposer:
                 self.console.print('[error]Invalid choice. Please try again.[/error]')
                 continue
 
-            question = await Prompt.ask(f"Describe the {'image' if prompt_type == 'midjourney' else 'music'} (or 'q' to quit)")
+            question = Prompt.ask(f"Describe the {'image' if prompt_type == 'midjourney' else 'music'} (or 'q' to quit)")
             
             if question.lower() == 'q':
                 self.console.print('[warning]Exiting... Goodbye![/warning]')

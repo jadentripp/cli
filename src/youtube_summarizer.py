@@ -66,8 +66,12 @@ async def process_video(url: str) -> None:
         
         console.print(Panel(Markdown(summary), title="Summary", border_style="cyan"))
 
+        # Create a base output directory for YouTube summaries
+        base_output_dir = os.path.join('output', 'youtube_summaries')
+        os.makedirs(base_output_dir, exist_ok=True)
+
         folder_name = await generate_folder_name(summary)
-        output_dir = os.path.join('output', folder_name)
+        output_dir = os.path.join(base_output_dir, folder_name)
         os.makedirs(output_dir, exist_ok=True)
         
         # Save summary
@@ -75,13 +79,14 @@ async def process_video(url: str) -> None:
         with open(summary_path, 'w', encoding='utf-8') as f:
             f.write(summary)
         
-        # Save transcript
+        # Save transcript and append video URL
         transcript_path = os.path.join(output_dir, "transcript.txt")
         with open(transcript_path, 'w', encoding='utf-8') as f:
             f.write(transcript)
+            f.write(f"\n\nVideo URL: {url}")
         
         console.print(f"[green]Summary saved in: {summary_path}[/green]")
-        console.print(f"[green]Transcript saved in: {transcript_path}[/green]")
+        console.print(f"[green]Transcript and video URL saved in: {transcript_path}[/green]")
     
     except Exception as e:
         console.print(f"[red]Error: {str(e)}[/red]")

@@ -1,0 +1,12 @@
+Prompt: bears in space
+
+Output:
+1. A group of three enormous bears wearing futuristic space suits, floating in a vibrant nebula filled with swirling colors of purple and blue, with distant stars twinkling in the background. The scene captures a sense of wonder and adventure, illuminated by the soft glow of a nearby planet. --ar 16:9 --quality 1
+
+2. A solitary bear, depicted in a whimsical cartoon style, piloting a colorful spaceship through a starry galaxy, surrounded by playful alien creatures and asteroids. The bear has a determined expression, showcasing its adventurous spirit, with a palette of bright, cheerful colors. --chaos 30 --stylize 500
+
+3. An oil painting of a majestic bear standing on the surface of a distant planet, gazing at a breathtaking view of a swirling galaxy overhead. The landscape features unusual rock formations and alien flora, bathed in the warm light of a nearby sun, evoking a sense of serenity and exploration. --ar 5:4 --quality 1
+
+4. A surreal digital art piece depicting a bear floating in zero gravity, surrounded by floating honeycombs and stars, with a dreamy pastel color palette. The bear appears relaxed and content, embodying a whimsical and imaginative atmosphere, as if in a dreamlike state. --stylize 750 --chaos 50
+
+5. A retro-futuristic scene featuring a bear in a vintage space helmet, exploring a colorful alien landscape filled with bizarre plants and creatures. The composition is reminiscent of 1960s sci-fi illustrations, with bold colors and a playful, adventurous mood. --ar 3:2 --quality 1
