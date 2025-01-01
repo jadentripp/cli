@@ -1,0 +1,14 @@
+Prompt: a space assasin
+
+Output:
+Here are five unique prompts based on the concept of a space assassin:
+
+1. A stealthy space assassin clad in a sleek, black exosuit, floating silently in the dimly lit corridor of a futuristic spaceship, with glowing blue energy blades drawn, ready for action. The background features high-tech control panels and flickering lights, creating a tense atmosphere. --ar 16:9 --chaos 20 --quality 1
+
+2. A mysterious space assassin with a cybernetic eye, perched on the edge of a crumbling asteroid, overlooking a vibrant nebula. The assassin's cloak billows in the cosmic wind, and their expression is one of determination. The scene is illuminated by the colorful glow of distant stars, enhancing the dramatic mood. --ar 3:2 --stylize 500 --quality 1
+
+3. An agile space assassin engaged in a fierce battle with alien mercenaries on a distant planet, surrounded by exotic flora and glowing crystals. The assassin wields dual plasma pistols, and the action is captured in a dynamic pose, with dust and debris flying around. The lighting is intense, highlighting the chaos of the scene. --ar 5:4 --chaos 30 --quality 1
+
+4. A lone space assassin standing in a shadowy alley of a bustling intergalactic city, with neon signs illuminating their face. The assassin's expression is cold and calculating, and they hold a futuristic sniper rifle, scanning the crowd for their target. The atmosphere is tense, with a mix of vibrant colors and dark shadows. --ar 7:4 --stylize 250 --quality 1
+
+5. A futuristic space assassin in a sleek, silver armor, stealthily navigating through a derelict space station, with flickering lights casting eerie shadows. The assassin's helmet reflects the dim light, and they are surrounded by remnants of advanced technology. The mood is suspenseful, evoking a sense of danger and intrigue. --ar 1:1 --chaos 10 --quality 1

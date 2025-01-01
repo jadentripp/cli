@@ -1,0 +1,14 @@
+Prompt: old dark movie scenes
+
+Output:
+Here are five unique prompts inspired by the theme of old dark movie scenes:
+
+1. A shadowy alleyway illuminated by a flickering streetlamp, with a mysterious figure in a trench coat and fedora lurking in the shadows, reminiscent of classic film noir. The scene is drenched in deep blacks and muted grays, evoking a sense of suspense and intrigue, captured in a high-contrast black and white photograph style. --ar 16:9 --chaos 20
+
+2. An eerie, dimly lit room filled with vintage furniture and cobwebs, where a ghostly apparition hovers near an antique mirror, reflecting a haunting past. The color palette features desaturated blues and greens, creating a melancholic atmosphere, styled as a 1940s horror film still. --ar 4:5 --quality 1
+
+3. A foggy graveyard at midnight, with twisted trees and crumbling tombstones, where a lone figure in a long cloak stands, gazing at the moon. The scene is painted in dark, moody watercolors, capturing the essence of gothic horror films from the 1930s, with a focus on atmospheric lighting and shadow play. --ar 3:2 --stylize 500
+
+4. A vintage jazz club, dimly lit with smoky air, where a lone saxophonist plays under a spotlight, surrounded by shadowy silhouettes of patrons. The scene is rich in warm sepia tones, reminiscent of classic black-and-white films, evoking a sense of nostalgia and longing. --ar 5:4 --stop 80
+
+5. A deserted train station at dusk, with an old steam locomotive shrouded in mist, and a flickering lantern casting ghostly shadows on the platform. The composition captures the essence of a suspenseful thriller from the 1950s, with a color palette of deep purples and blacks, creating an ominous mood. --ar 16:9 --weird 250

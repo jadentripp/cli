@@ -1,0 +1,12 @@
+Prompt: a retro futuristic bandit
+
+Output:
+1. A retro futuristic bandit wearing a sleek, metallic helmet and a leather jacket adorned with neon lights, standing in a desolate, post-apocalyptic cityscape at dusk, with a glowing moon in the background, capturing a sense of rebellion and adventure --ar 16:9 --stylize 500.
+
+2. A retro futuristic bandit with cybernetic enhancements, holding a glowing energy weapon, perched on a rusted hover bike in a vibrant, neon-lit alleyway, surrounded by holographic advertisements and graffiti, evoking a mood of danger and excitement --chaos 30 --quality 1.
+
+3. A retro futuristic bandit with a flowing cape and goggles, navigating through a bustling market filled with strange, alien technology and colorful stalls, under a sky filled with flying cars, creating a lively and chaotic atmosphere --ar 3:2 --stop 80.
+
+4. A retro futuristic bandit in a dusty desert landscape, wearing a tattered scarf and a high-tech visor, with a backdrop of towering, futuristic skyscrapers and a setting sun casting long shadows, conveying a sense of solitude and resilience --weird 200 --stylize 250.
+
+5. A retro futuristic bandit with a mischievous grin, standing in front of a vintage diner with a neon sign, surrounded by retro cars and robots, under a starry night sky, capturing a playful and nostalgic mood --ar 5:4 --chaos 20.

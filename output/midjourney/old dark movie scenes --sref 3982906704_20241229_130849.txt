@@ -1,0 +1,14 @@
+Prompt: old dark movie scenes --sref 3982906704
+
+Output:
+Here are five unique prompts inspired by "old dark movie scenes":
+
+1. A shadowy, dimly lit speakeasy from the 1920s, filled with mysterious characters in vintage attire, smoke swirling in the air, and a jazz band playing softly in the corner. The atmosphere is thick with tension and intrigue, illuminated by flickering candlelight. --ar 16:9 --s 500
+
+2. A noir detective's office, cluttered with old case files and a single desk lamp casting a warm glow. A rain-soaked window reveals a dark cityscape outside, while a femme fatale leans against the doorframe, her expression enigmatic and alluring. --ar 4:5 --s 750
+
+3. An eerie, abandoned theater from the 1940s, with tattered velvet seats and a cracked screen showing a black-and-white film. Shadows dance across the walls, and a ghostly figure can be seen in the balcony, evoking a sense of nostalgia and haunting beauty. --ar 3:2 --s 300
+
+4. A foggy graveyard at midnight, with ancient tombstones and twisted trees silhouetted against a full moon. A lone figure in a trench coat stands among the graves, their face obscured, creating an atmosphere of suspense and mystery reminiscent of classic horror films. --ar 16:9 --s 400
+
+5. A vintage film set depicting a dark alleyway, with cobblestone streets glistening from recent rain. A detective in a fedora confronts a shadowy figure, the tension palpable as the streetlamp casts long shadows, evoking the essence of classic film noir. --ar 5:4 --s 600

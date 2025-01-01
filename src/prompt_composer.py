@@ -7,7 +7,7 @@ from rich.prompt import Prompt
 from rich.theme import Theme
 from openai import AsyncOpenAI
 from datetime import datetime
-from src.utils import get_chat_completion
+from src.utils import get_chat_completion, count_tokens, calculate_prompt_price
 
 # Load environment variables from .env file
 load_dotenv()
@@ -32,10 +32,25 @@ class PromptComposer:
 
     async def generate_completion(self, prompt_type, question):
         try:
+            # Calculate input tokens
+            system_prompt = self.prompts[prompt_type]
+            input_tokens = count_tokens(system_prompt + question)
+            
             content = await get_chat_completion([
-                {"role": "system", "content": self.prompts[prompt_type]},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": question}
             ])
+            
+            # Calculate output tokens and price
+            output_tokens = count_tokens(content)
+            price_info = calculate_prompt_price(input_tokens, output_tokens)
+            
+            # Display pricing information
+            self.console.print("\n[bold cyan]Cost Information:[/bold cyan]")
+            self.console.print(f"Input Tokens: {price_info['input_tokens']}")
+            self.console.print(f"Output Tokens: {price_info['output_tokens']}")
+            self.console.print(f"Total Cost: ${price_info['total_cost']:.4f}")
+            
             return content
         except Exception as e:
             self.console.print(f"[error]API error: {type(e).__name__} - {str(e)}[/error]")
@@ -59,7 +74,7 @@ class PromptComposer:
 
     async def run(self):
         while True:
-            self.console.print(Panel("=== Prompt Gen ===", style="bold blue"))
+            self.console.print("\n=== Prompt Gen ===", style="bold blue")
             self.console.print("[warning]Enter 'q' to quit.[/warning]")
             self.console.print("[info]Select prompt type:[/info]")
             self.console.print("1. Midjourney")
@@ -89,7 +104,9 @@ class PromptComposer:
             with self.console.status("[bold green]Generating...[/bold green]"):
                 output = await self.generate_completion(prompt_type, question)
             if output:
-                self.console.print(Panel(output, title="[info]Generated Output[/info]", expand=False))
+                # Print the output without panel borders
+                self.console.print("\nGenerated Output:", style="bold cyan")
+                self.console.print(output)
                 saved_file = self.save_output(prompt_type, question, output)
-                self.console.print(f"[success]Saved to: {saved_file}[/success]")
-            self.console.print("─" * 80)
+                self.console.print(f"\n[success]Saved to: {saved_file}[/success]")
+            self.console.print()  # Just add a newline for spacing

@@ -1,0 +1,12 @@
+Prompt: big robots fighting
+
+Output:
+1. A colossal robot, towering over a city skyline, engages in an epic battle with another massive robot, their metallic bodies clashing with sparks flying. The scene is set during a dramatic sunset, casting vibrant orange and purple hues across the sky, while debris and smoke fill the air, creating a chaotic yet thrilling atmosphere. --ar 16:9 --chaos 30
+
+2. Two enormous robots, one sleek and futuristic, the other rugged and industrial, grapple in a desolate wasteland. The ground shakes beneath them, and dust clouds swirl around their feet. The mood is intense and gritty, with a monochromatic color palette dominated by shades of gray and steel blue, emphasizing the raw power of the machines. --ar 3:2 --quality 1
+
+3. A vibrant, cartoonish scene depicting giant robots battling in a bustling city, with colorful buildings and excited onlookers. One robot is painted in bright red and yellow, while the other is a deep blue with glowing green accents. The atmosphere is energetic and playful, with comic-style action lines and exaggerated expressions. --ar 5:4 --stylize 500
+
+4. A dramatic, cinematic view of two titanic robots locked in combat atop a mountain, surrounded by stormy clouds and flashes of lightning. The robots are intricately designed, showcasing a blend of steampunk and futuristic elements, with brass gears and glowing circuits. The mood is dark and foreboding, with a high contrast between the robots and the ominous sky. --ar 16:9 --stop 80
+
+5. An abstract interpretation of giant robots fighting, rendered in a vibrant watercolor style. The robots are depicted as swirling shapes and colors, with dynamic brush strokes conveying movement and energy. The background features a blurred cityscape, creating a dreamlike quality that contrasts with the intensity of the battle. --ar 1:1 --weird 300

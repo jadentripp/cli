@@ -1,0 +1,12 @@
+Prompt: a psychadelic spaceship
+
+Output:
+1. A vibrant, psychedelic spaceship soaring through a swirling nebula of neon colors, with intricate fractal patterns adorning its hull, illuminated by the glow of distant stars, in a cosmic landscape that evokes a sense of wonder and exploration. --ar 16:9 --chaos 30
+
+2. A surreal, psychedelic spaceship designed with organic shapes and bright, swirling colors, hovering above a dreamlike alien planet with oversized flora and a colorful sky, creating a whimsical and otherworldly atmosphere. --ar 4:5 --quality 1
+
+3. An abstract, psychedelic spaceship made of shimmering glass and iridescent materials, reflecting a kaleidoscope of colors as it navigates through a psychedelic wormhole, surrounded by pulsating light and energy waves, evoking a sense of speed and adventure. --ar 3:2 --stylize 500
+
+4. A futuristic, psychedelic spaceship with intricate geometric designs and vibrant patterns, landing on a surreal landscape filled with floating islands and bizarre creatures, under a sky filled with swirling galaxies and bright celestial bodies, creating a fantastical scene. --ar 5:4 --weird 250
+
+5. A whimsical, psychedelic spaceship resembling a giant flower, with petals made of colorful light, drifting through a cosmic garden filled with glowing stars and swirling galaxies, capturing the essence of harmony and beauty in the universe. --ar 1:1 --stop 80

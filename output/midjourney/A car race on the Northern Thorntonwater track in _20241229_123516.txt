@@ -1,0 +1,12 @@
+Prompt: A car race on the Northern Thorntonwater track in Lake Appleby, cars passing by, green trees, green background, blurry details, impressionist-style sketchy lines, pastel colors, pencil drawing, hatching and cross-hatching shading, minimalist. --ar 85:128
+
+Output:
+1. A vibrant car race on the Northern Thorntonwater track in Lake Appleby, featuring sleek racing cars speeding past lush green trees. The background is a soft blur of greenery, evoking an impressionist style with sketchy lines and pastel colors. The scene is rendered as a pencil drawing, utilizing hatching and cross-hatching techniques for shading, creating a minimalist yet dynamic composition. --ar 85:128
+
+2. An impressionist-style depiction of a car race on the Northern Thorntonwater track at Lake Appleby, where colorful racing cars zoom by amidst a backdrop of verdant trees. The artwork features soft, blurry details and a palette of pastel colors, with pencil drawing techniques including hatching and cross-hatching for depth, all presented in a minimalist format. --ar 85:128
+
+3. A minimalist pencil drawing of a car race on the Northern Thorntonwater track in Lake Appleby, showcasing cars in motion against a backdrop of green trees. The impressionist style is highlighted by sketchy lines and pastel colors, with a focus on hatching and cross-hatching shading to create a sense of movement and energy, while the details remain intentionally blurry. --ar 85:128
+
+4. A serene yet dynamic scene of a car race on the Northern Thorntonwater track in Lake Appleby, illustrated in an impressionist style. The artwork features racing cars passing through a lush green landscape, with a soft focus on the background. The use of pastel colors and pencil drawing techniques, including hatching and cross-hatching, adds texture while maintaining a minimalist aesthetic. --ar 85:128
+
+5. An artistic interpretation of a car race on the Northern Thorntonwater track at Lake Appleby, where vibrant cars race past green trees. The image is characterized by impressionist-style sketchy lines and a pastel color palette, rendered as a pencil drawing with hatching and cross-hatching for shading. The overall composition is minimalist, emphasizing the motion and energy of the race against a blurred green backdrop. --ar 85:128

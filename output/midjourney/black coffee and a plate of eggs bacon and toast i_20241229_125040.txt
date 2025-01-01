@@ -1,0 +1,12 @@
+Prompt: black coffee and a plate of eggs bacon and toast in the morning
+
+Output:
+1. A cozy breakfast scene featuring a steaming cup of black coffee beside a plate of perfectly cooked sunny-side-up eggs, crispy bacon, and golden-brown toast, all set on a rustic wooden table bathed in soft morning light, evoking a warm and inviting atmosphere. --ar 16:9 --q 1
+
+2. A close-up view of a breakfast spread showcasing a glossy black coffee mug next to a vibrant plate filled with fluffy scrambled eggs, sizzling bacon strips, and lightly buttered toast, with a backdrop of a sunlit kitchen window, creating a cheerful and energizing morning vibe. --ar 4:5 --chaos 10
+
+3. An artistic still life composition of a black coffee cup, a plate of poached eggs, crispy bacon, and artisanal toast, arranged on a marble countertop, with dramatic shadows and a monochromatic color palette, conveying a sophisticated and modern breakfast aesthetic. --ar 3:2 --stylize 500
+
+4. A nostalgic breakfast scene set in a quaint diner, featuring a steaming black coffee in a classic diner mug alongside a hearty plate of over-easy eggs, crispy bacon, and thick slices of toast, with retro decor and soft morning sunlight filtering through the window, creating a sense of comfort and familiarity. --ar 7:4 --quality 0.5
+
+5. A vibrant outdoor breakfast setting with a black coffee thermos, a colorful plate of scrambled eggs, crispy bacon, and artisanal toast, surrounded by lush greenery and dappled sunlight, capturing the essence of a refreshing morning meal in nature. --ar 16:9 --stop 80
