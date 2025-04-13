@@ -1,10 +1,12 @@
 import asyncio
 import os
+import argparse
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 from rich.theme import Theme
 from src.prompt_composer import PromptComposer
+from src.history import PromptHistory
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,17 +26,40 @@ custom_theme = Theme({
 console = Console(theme=custom_theme)
 
 HEADER = """
-AI Prompt Generator
+AI Prompt Generator (with OpenAI Agents SDK)
 """
 
-async def run_cli_app():
+def run_cli_app():
     composer = PromptComposer()
     console.print(Panel(HEADER, style="bold cyan", expand=False))
     console.print("[green]API key loaded successfully![/green]")
-    await composer.run()
+    composer.run()
+
+def show_history(prompt_type, limit, view_index=None):
+    history = PromptHistory()
+
+    if view_index is not None:
+        history.view_prompt(prompt_type, view_index)
+    else:
+        history.display_history(prompt_type, limit)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="AI Prompt Generator CLI")
+    parser.add_argument("--history", choices=["midjourney", "udio"], help="View history for a specific prompt type")
+    parser.add_argument("--history-interactive", choices=["midjourney", "udio"], help="Interactive history browser")
+    parser.add_argument("--limit", type=int, default=10, help="Limit the number of history items to display")
+    parser.add_argument("--view", type=int, help="View a specific prompt by index")
+    parser.add_argument("--search", help="Search term for filtering history")
+
+    args = parser.parse_args()
+
     try:
-        asyncio.run(run_cli_app())
+        if args.history_interactive:
+            history = PromptHistory()
+            history.interactive_history(args.history_interactive)
+        elif args.history:
+            show_history(args.history, args.limit, args.view)
+        else:
+            run_cli_app()
     except Exception as e:
         console.print(f"[bold red]An error occurred: {str(e)}[/bold red]")

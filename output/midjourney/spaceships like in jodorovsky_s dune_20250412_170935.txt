@@ -1,0 +1,20 @@
+Prompt: spaceships like in jodorovsky's dune
+
+Output:
+Here are 5 high-quality prompts inspired by the surreal and imaginative spaceship designs from Jodorowsky's *Dune*:
+
+---
+
+1. **"A colossal, organic spaceship inspired by Jodorowsky's *Dune*, shaped like a living creature with flowing, biomorphic curves and intricate, alien carvings, glowing with soft golden and turquoise lights, floating in a vast, star-filled void, surrounded by swirling nebulae in shades of magenta and deep blue, cinematic wide-angle perspective, ethereal and otherworldly atmosphere" --v 7 --ar 16:9 --stylize 750**
+
+2. **"A surreal, cathedral-like spaceship with towering spires and intricate stained glass panels, designed in the style of Jodorowsky's *Dune*, hovering above a desert planet with massive sand dunes and a glowing orange sun on the horizon, illuminated by beams of divine light, blending futuristic and ancient aesthetics, highly detailed, dreamlike and mystical" --v 7 --ar 5:4 --chaos 30 --stylize 850**
+
+3. **"A fleet of surreal, insect-like spaceships inspired by Jodorowsky's *Dune*, each with shimmering, iridescent exoskeletons and delicate, wing-like structures, flying in formation through a dense, emerald-green nebula, illuminated by pulsating bioluminescent patterns, cosmic and hypnotic, ultra-detailed, vibrant colors, cinematic sci-fi art" --v 7 --ar 2:1 --stylize 700**
+
+4. **"A massive, ancient spaceship resembling a floating monolith, covered in intricate alien hieroglyphs and glowing with faint, pulsating light, inspired by Jodorowsky's *Dune*, drifting through a dark, stormy cosmic expanse with lightning bolts illuminating its surface, mysterious and awe-inspiring, dark sci-fi aesthetic, hyper-detailed textures" --v 7 --ar 3:2 --chaos 40 --stylize 600**
+
+5. **"A surreal, flower-like spaceship with petal-shaped solar sails, inspired by Jodorowsky's *Dune*, radiating soft pastel hues of pink, lavender, and gold, floating gracefully above a crystalline alien ocean reflecting the stars, illuminated by a massive, glowing gas giant in the background, serene and dreamlike, ultra-detailed, fantastical sci-fi art" --v 7 --ar 4:5 --stylize 800**
+
+--- 
+
+Each prompt captures a unique aspect of Jodorowsky's visionary style, blending surrealism, intricate details, and cosmic wonder. Let me know if you'd like further refinements!

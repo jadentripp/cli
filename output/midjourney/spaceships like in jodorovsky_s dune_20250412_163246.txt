@@ -1,0 +1,14 @@
+Prompt: spaceships like in jodorovsky's dune
+
+Output:
+Here are five unique prompts inspired by the concept of spaceships reminiscent of Jodorowsky's "Dune":
+
+1. A colossal, organic spaceship resembling a giant sandworm, adorned with intricate patterns and glowing bioluminescent elements, soaring through a starry desert sky, with a surreal, dreamlike atmosphere --ar 16:9 --v 7.
+
+2. A fleet of angular, geometric spaceships with vibrant, psychedelic colors, hovering above a vast, alien landscape filled with towering rock formations and swirling sandstorms, evoking a sense of otherworldly adventure --chaos 30 --v 7.
+
+3. An elegant, elongated spaceship designed like a giant seashell, with iridescent surfaces reflecting the light of distant stars, set against a backdrop of a swirling nebula, creating a mystical and serene mood --ar 5:4 --v 7.
+
+4. A massive, fortress-like spaceship with intricate, ornate details and a metallic sheen, surrounded by smaller scout ships, all navigating through a swirling vortex of cosmic dust and energy, capturing a sense of epic scale and drama --stylize 500 --v 7.
+
+5. A surreal, floating city-ship with organic architecture, blending seamlessly with the surrounding cosmos, illuminated by soft, ethereal lights, creating a tranquil yet mysterious ambiance, as it drifts through a field of colorful asteroids --ar 3:2 --v 7.
