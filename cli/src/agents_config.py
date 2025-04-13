@@ -1,4 +1,6 @@
+from openai import AsyncOpenAI
 import os
+from cli.src.utils import count_tokens
 from dotenv import load_dotenv
 from agents import Agent, ModelSettings
 
@@ -10,7 +12,9 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 def load_prompt(file_path):
     """Load a prompt from a file."""
-    with open(file_path, 'r') as file:
+    pkg_dir = os.path.dirname(__file__)
+    full_path = os.path.join(pkg_dir, '..', file_path)
+    with open(full_path, 'r') as file:
         return file.read()
 
 # Create agents for different prompt types

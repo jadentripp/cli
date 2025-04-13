@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 from rich.theme import Theme
-from src.prompt_composer import PromptComposer
-from src.history import PromptHistory
+from cli.src.prompt_composer import PromptComposer
+from cli.src.history import PromptHistory
 
 # Load environment variables from .env file
 load_dotenv()
@@ -61,8 +61,6 @@ def main():
             show_history(args.history, args.limit, args.view)
         else:
             run_cli_app()
-    except KeyboardInterrupt:
-        console.print("\n[info]Exiting.[/info]")
     except Exception as e:
         console.print(f"[bold red]An error occurred: {str(e)}[/bold red]")
 

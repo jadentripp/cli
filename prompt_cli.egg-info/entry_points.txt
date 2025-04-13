@@ -1,0 +1,2 @@
+[console_scripts]
+prompt-cli = cli.src.cli:main

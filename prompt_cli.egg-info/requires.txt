@@ -1,0 +1,6 @@
+openai
+python-dotenv
+rich
+questionary
+tiktoken
+pyperclip>=1.8.2
