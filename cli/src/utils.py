@@ -66,6 +66,14 @@ def calculate_prompt_price(input_tokens, output_tokens, model="gpt-4o-mini"):
         "gpt-4o": {
             "input": 5.00 / 1_000_000,  # $5.00 per 1M tokens
             "output": 15.00 / 1_000_000,  # $15.00 per 1M tokens
+        },
+        "gpt-4.5-preview": {
+            "input": 75.00 / 1_000_000,  # $75.00 per 1M tokens
+            "output": 150.00 / 1_000_000,  # $150.00 per 1M tokens
+        },
+        "gpt-4.1-2025-04-14": {
+            "input": 3.00 / 1_000_000,  # $3.00 per 1M tokens
+            "output": 12.00 / 1_000_000,  # $12.00 per 1M tokens
         }
     }
 
@@ -84,8 +92,8 @@ def calculate_prompt_price(input_tokens, output_tokens, model="gpt-4o-mini"):
         "output_tokens": output_tokens
     }
 
-def copy_to_clipboard(console, text, operation=""):
-    """Helper function to copy text to clipboard with error handling and user feedback."""
+def copy_to_clipboard(console, text):
+    """Helper function to copy text to clipboard with error handling."""
     try:
         # Lazy import pyperclip only if needed
         pyperclip = None
@@ -126,11 +134,11 @@ def copy_to_clipboard(console, text, operation=""):
             except Exception as e:
                  console.print(f"[error]Error using pyperclip: {str(e)}[/error]")
                  success = False
-            
+
         if success:
-            console.print(f"[success]{operation} copied to clipboard![/success]")
+            # Success message removed to reduce UI clutter
             return True
-            
+
     except Exception as e:
         # Catch any other unexpected errors
         console.print(f"[error]Unexpected error copying to clipboard: {str(e)}[/error]")

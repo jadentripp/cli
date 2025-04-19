@@ -18,7 +18,7 @@ class PromptHistory:
         self.output_dir = os.path.join(os.path.expanduser('~'), '.prompt-cli', 'output')
         self.console = Console(theme=Theme({"info": "cyan", "warning": "yellow", "error": "bold red", "success": "bold green"}))
         self.page_size = 10
-        
+
     def get_history(self, prompt_type: str, search_term: str | None = None) -> list[dict]:
         """Get history of prompts for a specific type from JSON files."""
         type_dir = os.path.join(self.output_dir, prompt_type)
@@ -228,24 +228,38 @@ class PromptHistory:
 
             if variations:
                 self.console.print(Panel(f"[bold green]Output Variations:[/bold green]\n{display_output.strip()}", expand=False))
+                # Track the current selection index to maintain position
+                current_index = 0
                 while True:
                     self.console.print("\n[bold yellow]Select output variation to copy or go back:[/bold yellow]")
                     variation_choices = [
-                        Choice(f"{num}: {text.strip()[:70]}{'...' if len(text.strip()) > 70 else ''}", value=text.strip())
-                        for num, text in variations
+                        Choice(f"{num}: {text.strip()[:70]}{'...' if len(text.strip()) > 70 else ''}", value=(i, text.strip()))
+                        for i, (num, text) in enumerate(variations)
                     ]
                     variation_choices.append(questionary.Separator())
                     variation_choices.append(Choice("Back to History List", value=back_value))
 
-                    selected_variation = questionary.select(
+                    # Create a new questionary instance each time with the current index
+                    question = questionary.select(
                         "Which variation to copy?",
-                        choices=variation_choices, style=custom_style
-                    ).ask()
+                        choices=variation_choices,
+                        style=custom_style,
+                        default=variation_choices[current_index].value if current_index < len(variations) else None
+                    )
+                    selected_variation = question.ask()
 
                     if selected_variation is None or selected_variation == back_value:
                         break
                     else:
-                        copy_to_clipboard(self.console, selected_variation, "Output Variation")
+                        # selected_variation is now a tuple of (index, text)
+                        index, text = selected_variation
+                        copy_to_clipboard(self.console, text)
+                        # Update the current index to maintain position
+                        current_index = index
+                        # Clear the console to reduce clutter
+                        self.console.clear()
+                        # Re-display the panel with the output
+                        self.console.print(Panel(f"[bold green]Output Variations:[/bold green]\n{display_output.strip()}", expand=False))
             else:
                 # No variations found
                 self.console.print(Panel(f"[bold green]Output:[/bold green]\n{display_output.strip()}", expand=False))
@@ -269,9 +283,17 @@ class PromptHistory:
                     if choice is None or choice == back_value:
                         break
                     elif choice == COPY_PROMPT:
-                        copy_to_clipboard(self.console, prompt, "Prompt") # Use prompt variable
+                        copy_to_clipboard(self.console, prompt) # Use prompt variable
+                        # Clear the console to reduce clutter
+                        self.console.clear()
+                        # Re-display the panel with the output
+                        self.console.print(Panel(f"[bold green]Output:[/bold green]\n{display_output.strip()}", expand=False))
                     elif choice == COPY_OUTPUT:
-                        copy_to_clipboard(self.console, display_output.strip(), "Output") # Use cleaned output
+                        copy_to_clipboard(self.console, display_output.strip()) # Use cleaned output
+                        # Clear the console to reduce clutter
+                        self.console.clear()
+                        # Re-display the panel with the output
+                        self.console.print(Panel(f"[bold green]Output:[/bold green]\n{display_output.strip()}", expand=False))
 
             # Implicit return after loop breaks
 
@@ -312,9 +334,8 @@ class PromptHistory:
             # Display file information
             self.console.print(f"[dim]File: {file_name} (Created: {date_str})[/dim]")
 
-            # Update help text (adjust if arg structure changes)
-            self.console.print("\n[bold yellow]To copy variations or interact further, use the interactive mode:[/bold yellow]")
-            self.console.print(f"python3 main.py --history-interactive {prompt_type}") # Keep existing command for now
+            # Update help text
+            self.console.print("\n[bold yellow]To copy variations or interact further, use the interactive mode from the main menu.[/bold yellow]")
 
         except Exception as e:
             self.console.print(f"[error]Error displaying prompt index {index}: {str(e)}[/error]")

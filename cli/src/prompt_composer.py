@@ -32,9 +32,17 @@ class PromptComposer:
             'gpt-4o-2024-11-20': {
                 'name': 'GPT-4o (Nov 2024)',
                 'description': 'Powerful and accurate snapshot model'
+            },
+            'gpt-4.5-preview': {
+                'name': 'GPT-4.5 Preview',
+                'description': 'Latest preview model with premium capabilities (higher cost)'
+            },
+            'gpt-4.1-2025-04-14': {
+                'name': 'GPT-4.1 (Apr 2025)',
+                'description': 'Advanced model with exceptional performance'
             }
         }
-        self.current_model = "gpt-4o-2024-11-20"  # Default model
+        self.current_model = "gpt-4.1-2025-04-14"  # Default model
         self.prompts = {
             'midjourney': self.load_prompt('prompts/midjourney.txt'),
             'udio': self.load_prompt('prompts/udio.txt')
@@ -273,25 +281,38 @@ class PromptComposer:
 
                     if variations:
                         # --- Loop for multiple copies ---
+                        # Track the current selection index to maintain position
+                        current_index = 0
                         while True:
                             self.console.print("\n[bold yellow]Copy a variation? (or go back)[/bold yellow]")
                             variation_choices = [
-                                Choice(f"{num}: {text.strip()[:60]}{'...' if len(text.strip()) > 60 else ''}", value=text.strip())
-                                for num, text in variations
+                                Choice(f"{num}: {text.strip()[:60]}{'...' if len(text.strip()) > 60 else ''}", value=(i, text.strip()))
+                                for i, (num, text) in enumerate(variations)
                             ]
                             variation_choices.append(questionary.Separator())
                             variation_choices.append(Choice("Back to Main Menu", value=copy_back_value))
 
-                            selected_variation = questionary.select(
+                            # Create a new questionary instance each time with the current index
+                            question = questionary.select(
                                 "Select variation to copy:",
                                 choices=variation_choices,
-                                style=self.custom_style
-                            ).ask()
+                                style=self.custom_style,
+                                default=variation_choices[current_index].value if current_index < len(variations) else None
+                            )
+                            selected_variation = question.ask()
 
                             if selected_variation is None or selected_variation == copy_back_value:
                                 break # Exit copy loop
                             else:
-                                copy_to_clipboard(self.console, selected_variation, "Output Variation")
+                                # selected_variation is now a tuple of (index, text)
+                                index, text = selected_variation
+                                copy_to_clipboard(self.console, text)
+                                # Update the current index to maintain position
+                                current_index = index
+                                # Clear the console to reduce clutter
+                                self.console.clear()
+                                # Re-display the panel with the output
+                                self.console.print(Panel(display_output.strip(), expand=False))
                         # --- End Loop ---
 
                     else:
@@ -316,10 +337,18 @@ class PromptComposer:
                             if copy_choice is None or copy_choice == copy_back_value:
                                 break # Exit copy loop
                             elif copy_choice == COPY_PROMPT:
-                                copy_to_clipboard(self.console, question, "Original Prompt")
+                                copy_to_clipboard(self.console, question)
+                                # Clear the console to reduce clutter
+                                self.console.clear()
+                                # Re-display the panel with the output
+                                self.console.print(Panel(display_output.strip(), expand=False))
                             elif copy_choice == COPY_OUTPUT:
                                 # Use the cleaned display_output
-                                copy_to_clipboard(self.console, display_output.strip(), "Full Output")
+                                copy_to_clipboard(self.console, display_output.strip())
+                                # Clear the console to reduce clutter
+                                self.console.clear()
+                                # Re-display the panel with the output
+                                self.console.print(Panel(display_output.strip(), expand=False))
                         # --- End Loop ---
                     # --- END ADDED ---
 

@@ -4,24 +4,9 @@ This feature allows you to view the history of previously generated prompts in t
 
 ## Using the History Feature
 
-### Command Line Interface
-
-You can access the history feature from the command line using the following options:
-
-```bash
-# View Midjourney prompt history (default shows last 10 entries)
-python3 main.py --history midjourney
-
-# View Udio prompt history with a custom limit
-python3 main.py --history udio --limit 5
-
-# View a specific prompt by index (0 is the most recent)
-python3 main.py --history midjourney --view 0
-```
-
 ### Interactive Menu
 
-You can also access the history feature from within the interactive menu:
+Access the history feature from within the interactive menu:
 
 1. Start the application: `python3 main.py`
 2. When prompted for a choice, enter `h` to view history
@@ -58,8 +43,4 @@ The history feature works by reading the saved output files in the `output/` dir
 
 - `view_history(prompt_type)`: Displays a table of recent prompts and allows viewing details
 
-#### Command Line Interface
-
-- `--history`: View history for a specific prompt type
-- `--limit`: Limit the number of history items to display
-- `--view`: View a specific prompt by index
+The history feature is fully integrated into the Terminal User Interface (TUI) for a seamless experience.

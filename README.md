@@ -53,11 +53,7 @@ Access the history feature to view previously generated prompts:
 - Navigate through the list of previous prompts
 - Select a prompt to view its details
 
-You can also access history from the command line:
-
-```bash
-python main.py --history midjourney
-```
+The history feature provides a fully interactive experience within the application, with no need for command-line arguments.
 
 ### Testing the Agents SDK
 
