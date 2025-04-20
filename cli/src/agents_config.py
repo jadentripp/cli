@@ -46,3 +46,17 @@ def create_udio_agent(model="gpt-4o-mini"):
         ),
         mcp_config={"convert_schemas_to_strict": True}
     )
+
+def create_suno_agent(model="gpt-4o-mini"):
+    """Create an agent for Suno AI prompt generation."""
+    system_prompt = load_prompt('prompts/suno.txt')
+
+    return Agent(
+        name="Suno AI Prompt Generator",
+        instructions=system_prompt,
+        model=model,
+        model_settings=ModelSettings(
+            temperature=0
+        ),
+        mcp_config={"convert_schemas_to_strict": True}
+    )

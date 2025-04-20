@@ -4,7 +4,6 @@ import re
 from dotenv import load_dotenv
 import asyncio
 from rich.console import Console
-from rich.panel import Panel
 from rich.theme import Theme
 from openai import AsyncOpenAI
 from datetime import datetime
@@ -12,7 +11,7 @@ import questionary
 from questionary import Style as QuestionaryStyle, Choice
 import json
 from cli.src.utils import count_tokens, calculate_prompt_price, get_agent_completion, copy_to_clipboard
-from cli.src.agents_config import create_midjourney_agent, create_udio_agent
+from cli.src.agents_config import create_midjourney_agent, create_udio_agent, create_suno_agent
 from cli.src.history import PromptHistory
 
 # Load environment variables from .env file
@@ -45,7 +44,8 @@ class PromptComposer:
         self.current_model = "gpt-4.1-2025-04-14"  # Default model
         self.prompts = {
             'midjourney': self.load_prompt('prompts/midjourney.txt'),
-            'udio': self.load_prompt('prompts/udio.txt')
+            'udio': self.load_prompt('prompts/udio.txt'),
+            'suno': self.load_prompt('prompts/suno.txt')
         }
         # Initialize agents
         self.update_agents()
@@ -66,7 +66,8 @@ class PromptComposer:
         """Update agents with the current model."""
         self.agents = {
             'midjourney': create_midjourney_agent(model=self.current_model),
-            'udio': create_udio_agent(model=self.current_model)
+            'udio': create_udio_agent(model=self.current_model),
+            'suno': create_suno_agent(model=self.current_model)
         }
 
     @staticmethod
@@ -99,12 +100,8 @@ class PromptComposer:
             output_tokens = count_tokens(content)
             price_info = calculate_prompt_price(input_tokens, output_tokens, self.current_model)
 
-            # Display pricing information
-            self.console.print("\n[bold cyan]Cost Information:[/bold cyan]")
-            self.console.print(f"Model: {self.models[self.current_model]['name']}")
-            self.console.print(f"Input Tokens: {price_info['input_tokens']}")
-            self.console.print(f"Output Tokens: {price_info['output_tokens']}")
-            self.console.print(f"Total Cost: ${price_info['total_cost']:.4f}")
+            # Display pricing information in a more compact format
+            self.console.print(f"\n[dim]Model: {self.models[self.current_model]['name']} | Tokens: {price_info['input_tokens']}in/{price_info['output_tokens']}out | Cost: ${price_info['total_cost']:.4f}[/dim]")
 
             return content
         except Exception as e:
@@ -160,19 +157,20 @@ class PromptComposer:
     def run(self):
         # Define constants for menu actions to avoid string comparisons
         ACTION_GEN_MIDJOURNEY = "gen_midjourney"
+        ACTION_SELECT_MUSIC = "select_music"
         ACTION_GEN_UDIO = "gen_udio"
+        ACTION_GEN_SUNO = "gen_suno"
         ACTION_VIEW_HISTORY = "view_history"
         ACTION_SWITCH_MODEL = "switch_model"
         ACTION_QUIT = "quit_app"
 
         while True:
             self.console.print("\n=== Prompt Generator ===", style="bold blue")
-            self.console.print("[info]Use arrow keys to navigate and Enter to select:[/info]")
 
             # Use questionary with clearer value mapping
             choices = [
                 Choice("Generate Midjourney prompts for image creation", value=ACTION_GEN_MIDJOURNEY),
-                Choice("Generate Udio prompts for music creation", value=ACTION_GEN_UDIO),
+                Choice("Generate music prompts", value=ACTION_SELECT_MUSIC),
                 Choice("View history of previously generated prompts", value=ACTION_VIEW_HISTORY),
                 Choice(f"Switch model (Current: {self.models[self.current_model]['name']})", value=ACTION_SWITCH_MODEL),
                 Choice("Quit the application", value=ACTION_QUIT)
@@ -194,7 +192,7 @@ class PromptComposer:
                 break
 
             elif selected_action == ACTION_VIEW_HISTORY:
-                history_choices = ["midjourney", "udio"]
+                history_choices = ["midjourney", "udio", "suno"]
                 selected_type = questionary.select(
                     "Which history do you want to view interactively?",
                     choices=history_choices,
@@ -214,7 +212,7 @@ class PromptComposer:
             elif selected_action == ACTION_SWITCH_MODEL:
                 # Use questionary.Choice for better value handling
                 model_choices = [
-                    Choice(f"{value['name']} - {value['description']}", value=key)
+                    Choice(f"{value['name']}", value=key)
                     for key, value in self.models.items()
                 ]
                 # Add a Cancel option
@@ -235,10 +233,156 @@ class PromptComposer:
                 # If new_model_key is None (Cancel or Ctrl+C), just continue
                 continue # Go back to main menu
 
-            elif selected_action in [ACTION_GEN_MIDJOURNEY, ACTION_GEN_UDIO]:
-                prompt_type = 'midjourney' if selected_action == ACTION_GEN_MIDJOURNEY else 'udio'
-                prompt_noun = 'image' if prompt_type == 'midjourney' else 'music'
+            elif selected_action == ACTION_SELECT_MUSIC:
+                # Submenu for music generation options
+                music_choices = [
+                    Choice("Generate Udio prompts for music creation", value=ACTION_GEN_UDIO),
+                    Choice("Generate Suno AI prompts for instrumental music", value=ACTION_GEN_SUNO),
+                    Choice("Back to main menu", value=None)
+                ]
 
+                music_action = questionary.select(
+                    "Select a music generation option:",
+                    choices=music_choices,
+                    style=self.custom_style
+                ).ask()
+
+                if music_action is None:
+                    continue  # Go back to main menu
+                
+                # Set selected_action to the chosen music option and continue directly to processing
+                selected_action = music_action
+                
+                # Immediately process the selected music action
+                if selected_action == ACTION_GEN_UDIO:
+                    prompt_type = 'udio'
+                    prompt_noun = 'music'
+                elif selected_action == ACTION_GEN_SUNO:
+                    prompt_type = 'suno'
+                    prompt_noun = 'instrumental music'
+                else:
+                    continue  # Invalid selection, go back to main menu
+                
+                # Display a clear prompt for user input
+                self.console.print(f"\n[bold cyan]Enter your description for {prompt_noun} generation:[/bold cyan]")
+                question = questionary.text(
+                    f"Describe the {prompt_noun} (or type 'q' to cancel):",
+                    style=self.custom_style
+                ).ask()
+                
+                if question is None:  # Handle Ctrl+C during text input
+                    self.console.print('\n[warning]Input cancelled.[/warning]')
+                    continue  # Go back to main menu
+                
+                # Handle empty input
+                if not question:
+                    self.console.print('[error]Please provide a description or type \'q\' to cancel.[/error]')
+                    continue
+                
+                # Check for 'q' specifically
+                if question.strip().lower() == 'q':
+                    self.console.print('[warning]Generation cancelled.[/warning]')
+                    continue  # Go back to main menu
+                
+                # --- Generation logic ---
+                with self.console.status("[bold green]Generating...[/bold green]"):
+                    # Run the async function
+                    output = asyncio.run(self.generate_completion(prompt_type, question))
+                
+                if output:
+                    # Display and save output
+                    self.console.print("\n[bold cyan]Generated Output:[/bold cyan]")
+                    display_output = re.sub(r'\*\*(.*?)\*\*', r'\1', output)  # Basic cleanup for display
+                    display_output = display_output.replace('*', '')
+                    self.console.print(display_output.strip())
+                    
+                    # Save output but don't display the path
+                    self.save_output(prompt_type, question, output)
+                    
+                    # --- Interactive Copy Logic ---
+                    variations = re.findall(r'^\s*(\d+)\.\s*(.*?)(?=\n\s*\d+\.|\n*$)', output, re.DOTALL | re.MULTILINE)
+                    
+                    copy_back_value = '__back__'  # Define constant for back value
+                    
+                    if variations:
+                        # --- Loop for multiple copies ---
+                        # Track the current selection index to maintain position
+                        current_index = 0
+                        while True:
+                            self.console.print("\n[bold yellow]Copy a variation? (or go back)[/bold yellow]")
+                            variation_choices = [
+                                Choice(f"{num}: {text.strip()[:60]}{'...' if len(text.strip()) > 60 else ''}", value=(i, text.strip()))
+                                for i, (num, text) in enumerate(variations)
+                            ]
+                            variation_choices.append(questionary.Separator())
+                            variation_choices.append(Choice("Back to Main Menu", value=copy_back_value))
+                            
+                            # Create a new questionary instance each time with the current index
+                            question = questionary.select(
+                                "Select variation to copy:",
+                                choices=variation_choices,
+                                style=self.custom_style,
+                                default=variation_choices[current_index].value if current_index < len(variations) else None
+                            )
+                            selected_variation = question.ask()
+                            
+                            if selected_variation is None or selected_variation == copy_back_value:
+                                break  # Exit copy loop
+                            else:
+                                # selected_variation is now a tuple of (index, text)
+                                index, text = selected_variation
+                                copy_to_clipboard(self.console, text, show_success=False)
+                                # Update the current index to maintain position
+                                current_index = index
+                                # Clear the console to reduce clutter
+                                self.console.clear()
+                                # Re-display the panel with the output
+                                self.console.print(display_output.strip())
+                    else:
+                        # --- Loop for multiple copies (no variations) ---
+                        # Define constants for copy actions
+                        COPY_PROMPT = 'copy_prompt'
+                        COPY_OUTPUT = 'copy_output'
+                        
+                        while True:
+                            self.console.print("\n[bold yellow]Copy output? (or go back)[/bold yellow]")
+                            no_variation_choices = [
+                                Choice('Copy Original Prompt', value=COPY_PROMPT),
+                                Choice('Copy Full Output', value=COPY_OUTPUT),
+                                Choice("Back to Main Menu", value=copy_back_value)
+                            ]
+                            copy_choice = questionary.select(
+                                "Select an action:",
+                                choices=no_variation_choices,
+                                style=self.custom_style
+                            ).ask()
+                            
+                            if copy_choice is None or copy_choice == copy_back_value:
+                                break  # Exit copy loop
+                            elif copy_choice == COPY_PROMPT:
+                                copy_to_clipboard(self.console, question, show_success=False)
+                                # Clear the console to reduce clutter
+                                self.console.clear()
+                                # Re-display the panel with the output
+                                self.console.print(display_output.strip())
+                            elif copy_choice == COPY_OUTPUT:
+                                # Use the cleaned display_output
+                                copy_to_clipboard(self.console, display_output.strip(), show_success=False)
+                                # Clear the console to reduce clutter
+                                self.console.clear()
+                                # Re-display the panel with the output
+                                self.console.print(display_output.strip())
+                
+                # Add a newline for spacing before looping back to main menu
+                self.console.print()
+
+            elif selected_action == ACTION_GEN_MIDJOURNEY:
+                # Process Midjourney image generation
+                prompt_type = 'midjourney'
+                prompt_noun = 'image'
+                
+                # Display a clear prompt for user input
+                self.console.print(f"\n[bold cyan]Enter your description for {prompt_noun} generation:[/bold cyan]")
                 question = questionary.text(
                     f"Describe the {prompt_noun} (or type 'q' to cancel):", # Clarify 'q' action
                     style=self.custom_style
@@ -265,14 +409,13 @@ class PromptComposer:
 
                 if output:
                     # Display and save output
-                    self.console.print("\nGenerated Output:", style="bold cyan")
+                    self.console.print("\n[bold cyan]Generated Output:[/bold cyan]")
                     display_output = re.sub(r'\*\*(.*?)\*\*', r'\1', output) # Basic cleanup for display
                     display_output = display_output.replace('*', '')
-                    self.console.print(Panel(display_output.strip(), expand=False))
+                    self.console.print(display_output.strip())
 
-                    saved_file = self.save_output(prompt_type, question, output)
-                    if saved_file:
-                        self.console.print(f"\n[success]Saved to: {saved_file}[/success]")
+                    # Save output but don't display the path
+                    self.save_output(prompt_type, question, output)
 
                     # --- Interactive Copy Logic ---
                     variations = re.findall(r'^\s*(\d+)\.\s*(.*?)(?=\n\s*\d+\.|\n*$)', output, re.DOTALL | re.MULTILINE)
@@ -306,13 +449,13 @@ class PromptComposer:
                             else:
                                 # selected_variation is now a tuple of (index, text)
                                 index, text = selected_variation
-                                copy_to_clipboard(self.console, text)
+                                copy_to_clipboard(self.console, text, show_success=False)
                                 # Update the current index to maintain position
                                 current_index = index
                                 # Clear the console to reduce clutter
                                 self.console.clear()
                                 # Re-display the panel with the output
-                                self.console.print(Panel(display_output.strip(), expand=False))
+                                self.console.print(display_output.strip())
                         # --- End Loop ---
 
                     else:
@@ -337,18 +480,18 @@ class PromptComposer:
                             if copy_choice is None or copy_choice == copy_back_value:
                                 break # Exit copy loop
                             elif copy_choice == COPY_PROMPT:
-                                copy_to_clipboard(self.console, question)
+                                copy_to_clipboard(self.console, question, show_success=False)
                                 # Clear the console to reduce clutter
                                 self.console.clear()
                                 # Re-display the panel with the output
-                                self.console.print(Panel(display_output.strip(), expand=False))
+                                self.console.print(display_output.strip())
                             elif copy_choice == COPY_OUTPUT:
                                 # Use the cleaned display_output
-                                copy_to_clipboard(self.console, display_output.strip())
+                                copy_to_clipboard(self.console, display_output.strip(), show_success=False)
                                 # Clear the console to reduce clutter
                                 self.console.clear()
                                 # Re-display the panel with the output
-                                self.console.print(Panel(display_output.strip(), expand=False))
+                                self.console.print(display_output.strip())
                         # --- End Loop ---
                     # --- END ADDED ---
 

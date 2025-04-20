@@ -92,7 +92,7 @@ def calculate_prompt_price(input_tokens, output_tokens, model="gpt-4o-mini"):
         "output_tokens": output_tokens
     }
 
-def copy_to_clipboard(console, text):
+def copy_to_clipboard(console, text, show_success=True):
     """Helper function to copy text to clipboard with error handling."""
     try:
         # Lazy import pyperclip only if needed
@@ -136,7 +136,8 @@ def copy_to_clipboard(console, text):
                  success = False
 
         if success:
-            # Success message removed to reduce UI clutter
+            if show_success:
+                console.print("[success]Copied to clipboard![/success]")
             return True
 
     except Exception as e:

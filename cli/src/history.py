@@ -138,13 +138,9 @@ class PromptHistory:
 
             # Display the table (remains largely the same, uses 'question' field)
             self.console.clear()
-            self.console.print(Panel(
-                f"Showing {start_idx + 1}-{end_idx} of {len(history)} entries" +
-                (f" (filtered by: '{search_term}')" if search_term else ""),
-                title=f"{prompt_type.capitalize()} History Navigation", style="cyan"
-            ))
+            self.console.print(f"{prompt_type.capitalize()} History - {start_idx + 1}-{end_idx} of {len(history)} entries" + (f" (filtered: '{search_term}')" if search_term else ""), style="cyan")
             if current_items:
-                table = Table(title=f"{prompt_type.capitalize()} Prompts", show_header=True, header_style="bold magenta")
+                table = Table(show_header=True, header_style="bold magenta")
                 table.add_column("#", style="dim", width=4, justify="right")
                 table.add_column("Date", style="cyan", width=16)
                 table.add_column("Prompt", style="green", no_wrap=False) # Allow wrapping
@@ -209,8 +205,8 @@ class PromptHistory:
 
             # Display prompt and file info
             self.console.clear()
-            self.console.print(Panel(f"[bold cyan]Prompt:[/bold cyan]\n{prompt}", expand=False, title="History Detail"))
-            self.console.print(f"[dim]File: {file_name} (Created: {date_str})[/dim]")
+            self.console.print("[bold cyan]Prompt:[/bold cyan]")
+            self.console.print(prompt)
 
             # Clean output for display (same logic as before)
             display_output = re.sub(r'\*\*(.*?)\*\*', r'\1', output)
@@ -227,7 +223,8 @@ class PromptHistory:
             back_value = '__back__'
 
             if variations:
-                self.console.print(Panel(f"[bold green]Output Variations:[/bold green]\n{display_output.strip()}", expand=False))
+                self.console.print("[bold green]Output Variations:[/bold green]")
+                self.console.print(display_output.strip())
                 # Track the current selection index to maintain position
                 current_index = 0
                 while True:
@@ -253,16 +250,18 @@ class PromptHistory:
                     else:
                         # selected_variation is now a tuple of (index, text)
                         index, text = selected_variation
-                        copy_to_clipboard(self.console, text)
+                        copy_to_clipboard(self.console, text, show_success=False)
                         # Update the current index to maintain position
                         current_index = index
                         # Clear the console to reduce clutter
                         self.console.clear()
                         # Re-display the panel with the output
-                        self.console.print(Panel(f"[bold green]Output Variations:[/bold green]\n{display_output.strip()}", expand=False))
+                        self.console.print("[bold green]Output Variations:[/bold green]")
+                        self.console.print(display_output.strip())
             else:
                 # No variations found
-                self.console.print(Panel(f"[bold green]Output:[/bold green]\n{display_output.strip()}", expand=False))
+                self.console.print("[bold green]Output:[/bold green]")
+                self.console.print(display_output.strip())
 
                 # Define constants for copy actions
                 COPY_PROMPT = 'copy_prompt'
@@ -283,17 +282,19 @@ class PromptHistory:
                     if choice is None or choice == back_value:
                         break
                     elif choice == COPY_PROMPT:
-                        copy_to_clipboard(self.console, prompt) # Use prompt variable
+                        copy_to_clipboard(self.console, prompt, show_success=False) # Use prompt variable
                         # Clear the console to reduce clutter
                         self.console.clear()
                         # Re-display the panel with the output
-                        self.console.print(Panel(f"[bold green]Output:[/bold green]\n{display_output.strip()}", expand=False))
+                        self.console.print("[bold green]Output:[/bold green]")
+                        self.console.print(display_output.strip())
                     elif choice == COPY_OUTPUT:
-                        copy_to_clipboard(self.console, display_output.strip()) # Use cleaned output
+                        copy_to_clipboard(self.console, display_output.strip(), show_success=False) # Use cleaned output
                         # Clear the console to reduce clutter
                         self.console.clear()
                         # Re-display the panel with the output
-                        self.console.print(Panel(f"[bold green]Output:[/bold green]\n{display_output.strip()}", expand=False))
+                        self.console.print("[bold green]Output:[/bold green]")
+                        self.console.print(display_output.strip())
 
             # Implicit return after loop breaks
 
@@ -325,14 +326,13 @@ class PromptHistory:
             date_str = timestamp.strftime("%Y-%m-%d %H:%M") if timestamp else "Unknown Date"
 
             # Display the prompt and output (using cleaned output)
-            self.console.print(Panel(f"[bold cyan]Prompt:[/bold cyan]\n{prompt}", expand=False))
+            self.console.print("[bold cyan]Prompt:[/bold cyan]")
+            self.console.print(prompt)
             display_output = re.sub(r'\*\*(.*?)\*\*', r'\1', output)
             display_output = display_output.replace('*', '')
             display_output = re.sub(r'\n{3,}', '\n\n', display_output) # Clean extra newlines
-            self.console.print(Panel(f"[bold green]Output:[/bold green]\n{display_output.strip()}", expand=False))
-
-            # Display file information
-            self.console.print(f"[dim]File: {file_name} (Created: {date_str})[/dim]")
+            self.console.print("[bold green]Output:[/bold green]")
+            self.console.print(display_output.strip())
 
             # Update help text
             self.console.print("\n[bold yellow]To copy variations or interact further, use the interactive mode from the main menu.[/bold yellow]")

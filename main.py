@@ -1,12 +1,10 @@
-import asyncio
 import os
 import argparse
 from dotenv import load_dotenv
 from rich.console import Console
-from rich.panel import Panel
 from rich.theme import Theme
-from src.prompt_composer import PromptComposer
-from src.history import PromptHistory
+from cli.src.prompt_composer import PromptComposer
+from cli.src.history import PromptHistory
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,14 +23,11 @@ custom_theme = Theme({
 
 console = Console(theme=custom_theme)
 
-HEADER = """
-AI Prompt Generator (with OpenAI Agents SDK)
-"""
+HEADER = "AI Prompt Generator"
 
 def run_cli_app():
     composer = PromptComposer()
-    console.print(Panel(HEADER, style="bold cyan", expand=False))
-    console.print("[green]API key loaded successfully![/green]")
+    console.print(HEADER, style="bold cyan")
     composer.run()
 
 def show_history(prompt_type, limit, view_index=None):
@@ -45,8 +40,8 @@ def show_history(prompt_type, limit, view_index=None):
 
 def main():
     parser = argparse.ArgumentParser(description="AI Prompt Generator CLI")
-    parser.add_argument("--history", choices=["midjourney", "udio"], help="View history for a specific prompt type")
-    parser.add_argument("--history-interactive", choices=["midjourney", "udio"], help="Interactive history browser")
+    parser.add_argument("--history", choices=["midjourney", "udio", "suno"], help="View history for a specific prompt type")
+    parser.add_argument("--history-interactive", choices=["midjourney", "udio", "suno"], help="Interactive history browser")
     parser.add_argument("--limit", type=int, default=10, help="Limit the number of history items to display")
     parser.add_argument("--view", type=int, help="View a specific prompt by index")
     parser.add_argument("--search", help="Search term for filtering history")

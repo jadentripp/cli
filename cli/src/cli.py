@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 from rich.console import Console
-from rich.panel import Panel
 from rich.theme import Theme
 from cli.src.prompt_composer import PromptComposer
 
@@ -22,15 +21,12 @@ custom_theme = Theme({
 
 console = Console(theme=custom_theme)
 
-HEADER = """
-AI Prompt Generator (with OpenAI Agents SDK)
-"""
+HEADER = "AI Prompt Generator"
 
 def main():
     try:
         composer = PromptComposer()
-        console.print(Panel(HEADER, style="bold cyan", expand=False))
-        console.print("[green]API key loaded successfully![/green]")
+        console.print(HEADER, style="bold cyan")
         composer.run()
     except KeyboardInterrupt:
         console.print("\n[info]Exiting.[/info]")
